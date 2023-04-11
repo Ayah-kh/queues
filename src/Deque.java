@@ -12,7 +12,7 @@ public class Deque<Item> implements Iterable<Item> {
 
     // is the deque empty?
     public boolean isEmpty() {
-        return false;
+        return first==null&&last==null;
     }
 
     // return the number of items on the deque
@@ -22,6 +22,8 @@ public class Deque<Item> implements Iterable<Item> {
 
     // add the item to the front
     public void addFirst(Item item) {
+        if (item==null)
+            throw new IllegalArgumentException();
         Node oldFirst=first;
         first=new Node();
         first.item=item;
@@ -32,6 +34,8 @@ public class Deque<Item> implements Iterable<Item> {
 
     // add the item to the back
     public void addLast(Item item) {
+        if (item==null)
+            throw new IllegalArgumentException();
         Node oldLast = last;
         last=new Node();
         last.item=item;
@@ -44,6 +48,8 @@ public class Deque<Item> implements Iterable<Item> {
 
     // remove and return the item from the front
     public Item removeFirst() {
+        if (isEmpty())
+            throw new java.util.NoSuchElementException();
         Item item= first.item;
         first=first.next;
         if (isEmpty())
@@ -54,6 +60,8 @@ public class Deque<Item> implements Iterable<Item> {
 
     // remove and return the item from the back
     public Item removeLast() {
+        if (isEmpty())
+            throw new java.util.NoSuchElementException();
         Item item= last.item;
 
         last=null;
@@ -70,6 +78,7 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     private class dequeIterator<Item> implements java.util.Iterator<Item> {
+        private Node current=first;
 
         @Override
         public boolean hasNext() {
@@ -78,6 +87,8 @@ public class Deque<Item> implements Iterable<Item> {
 
         @Override
         public Item next() {
+            Item item= (Item) current.item;
+            current=current.next;
             return null;
         }
     }
