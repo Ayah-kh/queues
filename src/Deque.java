@@ -11,12 +11,14 @@ public class Deque<Item> implements Iterable<Item> {
     // unit testing (required)
     public static void main(String[] args) {
         Deque deque=new Deque();
+        System.out.println("deque.isEmpty() before = " + deque.isEmpty());
         deque.addFirst("Hello");
-        deque.addLast("Bey");
+//        deque.addLast("Bey");
+        System.out.println("deque.size = " + deque.size);
         System.out.println(deque.isEmpty());
         System.out.println(deque.removeFirst());
-        System.out.println(deque.removeLast());
-        System.out.println(deque.isEmpty());
+//        System.out.println(deque.removeLast());
+//        System.out.println(deque.isEmpty());
     }
 
     // is the deque empty?
@@ -33,13 +35,22 @@ public class Deque<Item> implements Iterable<Item> {
     public void addFirst(Item item) {
         if (item == null)
             throw new IllegalArgumentException();
-        Node oldFirst = first;
-        first = new Node();
-        size++;
-        first.item = item;
-        first.next = oldFirst;
-        oldFirst.prev=first;
-        first.prev=null;
+        if (isEmpty()){
+            first=new Node();
+            size++;
+            first.item=item;
+            first.next=null;
+            first.prev=null;
+            last=first;
+        }else {
+            Node oldFirst = first;
+            first = new Node();
+            size++;
+            first.item = item;
+            first.next = oldFirst;
+            oldFirst.prev = first;
+            first.prev = null;
+        }
 //        if (last==null)
 //            first = last;
     }
@@ -48,13 +59,22 @@ public class Deque<Item> implements Iterable<Item> {
     public void addLast(Item item) {
         if (item == null)
             throw new IllegalArgumentException();
-        Node oldLast = last;
-        last = new Node();
-        size++;
-        last.item = item;
-        last.next = null;
-        last.prev=oldLast;
-        oldLast.next=last;
+        if (isEmpty()){
+            last=new Node();
+            size++;
+            last.item=item;
+            last.next=null;
+            last.prev=null;
+            first=last;
+        }else {
+            Node oldLast = last;
+            last = new Node();
+            size++;
+            last.item = item;
+            last.next = null;
+            last.prev = oldLast;
+            oldLast.next = last;
+        }
 //        if (first==null)
 //            first = last;
 //        else
