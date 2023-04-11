@@ -1,3 +1,5 @@
+import java.util.Iterator;
+
 public class Deque<Item> implements Iterable<Item> {
    private Node first,last;
 
@@ -17,7 +19,11 @@ public class Deque<Item> implements Iterable<Item> {
 
     // return the number of items on the deque
     public int size() {
-        return 0;
+        int count=0;
+        while (iterator().hasNext())
+            count++;
+        iterator().next();
+        return count;
     }
 
     // add the item to the front
@@ -82,14 +88,21 @@ public class Deque<Item> implements Iterable<Item> {
 
         @Override
         public boolean hasNext() {
-            return false;
+            return current!=null;
         }
 
         @Override
         public Item next() {
+            if (!hasNext())
+                throw new java.util.NoSuchElementException();
             Item item= (Item) current.item;
             current=current.next;
-            return null;
+            return item;
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
         }
     }
 
