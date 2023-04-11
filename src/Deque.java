@@ -10,6 +10,13 @@ public class Deque<Item> implements Iterable<Item> {
 
     // unit testing (required)
     public static void main(String[] args) {
+        Deque deque=new Deque();
+        deque.addFirst("Hello");
+        deque.addLast("Bey");
+        System.out.println(deque.isEmpty());
+        System.out.println(deque.removeFirst());
+        System.out.println(deque.removeLast());
+        System.out.println(deque.isEmpty());
     }
 
     // is the deque empty?
