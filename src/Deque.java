@@ -108,11 +108,11 @@ public class Deque<Item> implements Iterable<Item> {
     // return an iterator over items in order from front to back
     @Override
     public java.util.Iterator<Item> iterator() {
-        return new dequeIterator<Item>();
+        return new dequeIterator();
 
     }
 
-    private class dequeIterator<Item> implements java.util.Iterator {
+    private class dequeIterator implements java.util.Iterator<Item> {
         private Node current = first;
 
         @Override
@@ -124,7 +124,7 @@ public class Deque<Item> implements Iterable<Item> {
         public Item next() {
             if (!hasNext())
                 throw new java.util.NoSuchElementException();
-            Item item = (Item) current.item;
+            Item item = current.item;
             current = current.next;
             return item;
         }
