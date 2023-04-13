@@ -60,26 +60,58 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     public Item sample() {
         if (isEmpty())
             throw new java.util.NoSuchElementException();
+        Item sample=null;
+        while (sample==null)
+            sample=array[StdRandom.uniformInt(lastIndex+1)];
         return null;
+    }
+
+    private void resize(int newCapacity){
+        @SuppressWarnings("unchecked")
+                Item[] newArray=(Item[]) new Object[newCapacity];
+        int i=0;
+        int j=0;
+        while (i<=lastIndex){
+            newArray[j++]=array[i++];
+        }
+        array=newArray;
+        lastIndex=j-1;
     }
 
     // return an independent iterator over items in random order
     public java.util.Iterator<Item> iterator() {
-        return new QueueIterator<Item>();
+        return new QueueIterator();
     }
 
-    private class QueueIterator<Item> implements Iterator<Item> {
+    private class QueueIterator implements Iterator<Item> {
+        private Item[] copiedArray;
+        private int copiedLastIndex;
+
+        QueueIterator(){
+            @SuppressWarnings("unchecked")
+                    Item[] a =(Item[]) new Object[lastIndex+1];
+            for (int i = 0; i <=lastIndex; i++) {
+                a[i]=array[i];
+            }
+            copiedArray=a;
+            copiedLastIndex=lastIndex;
+        }
+
 
         @Override
         public boolean hasNext() {
-            return false;
+            return copiedLastIndex>=0;
         }
 
         @Override
         public Item next() {
             if (isEmpty())
                 throw new java.util.NoSuchElementException();
-            return null;
+            int i =StdRandom.uniformInt(copiedLastIndex+1);
+            Item item=copiedArray[i];
+            copiedArray[i]=copiedArray[copiedLastIndex];
+            copiedArray[copiedLastIndex--]=null;
+            return item;
         }
 
         @Override
